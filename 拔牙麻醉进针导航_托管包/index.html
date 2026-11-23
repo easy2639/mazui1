@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>失之毫厘，差以千里 · 拔牙麻醉进针</title>
+<style>
+:root{
+  --bg:#0f1420; --panel:#161d2e; --panel2:#1d2740; --line:#2a3552;
+  --ink:#eef2f7; --sub:#9fb0cf; --mut:#6b7ca0;
+  --np:#E76F51; --gp:#F4A261; --io:#E9C46A; --psa:#2A9D8F;
+  --ia:#5AA9E6; --lg:#7B8CFF; --bu:#B088E0; --me:#59C2C0;
+  --ok:#3ddc97; --warn:#ff6b6b; --gold:#ffd166;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:radial-gradient(1200px 700px at 70% -10%,#1b2440 0%,transparent 60%),var(--bg);
+  color:var(--ink);font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",system-ui,sans-serif;
+  line-height:1.65;padding:0 0 70px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+header{padding:54px 22px 26px;text-align:center}
+.kicker{color:var(--gold);letter-spacing:6px;font-size:13px;font-weight:700}
+h1{font-size:40px;margin:10px 0 6px;letter-spacing:2px;
+  background:linear-gradient(90deg,#ffd166,#ff8f70,#7B8CFF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--sub);font-size:16px;max-width:760px;margin:8px auto 0}
+.tagrow{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+.tag{background:var(--panel2);border:1px solid var(--line);color:var(--sub);
+  padding:5px 12px;border-radius:20px;font-size:12.5px}
+section{margin-top:36px}
+.h2{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:800;margin-bottom:14px}
+.h2 .n{background:var(--gold);color:#20240f;width:30px;height:30px;border-radius:9px;
+  display:grid;place-items:center;font-size:15px;box-shadow:0 4px 14px rgba(255,209,102,.25)}
+.h2 small{color:var(--mut);font-weight:500;font-size:13px;margin-left:4px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px}
+
+/* table */
+.tbl-wrap{overflow-x:auto;border-radius:14px;border:1px solid var(--line)}
+table{border-collapse:collapse;width:100%;min-width:820px;font-size:13.5px}
+th,td{padding:11px 13px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--panel2);color:var(--gold);font-size:12.5px;letter-spacing:.5px}
+.grp td{background:#111a2e;color:var(--sub);font-weight:800;letter-spacing:3px;font-size:12px}
+td .nv{font-weight:800;font-size:14px}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:middle}
+.pill{display:inline-block;padding:1px 8px;border-radius:20px;font-size:11.5px;font-weight:700}
+.miss{color:#ffd166;font-weight:600}
+tr:hover td{background:rgba(255,255,255,.03)}
+
+/* 3D body film cards */
+.films{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:820px){.films{grid-template-columns:1fr}}
+.film{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.film .top{padding:14px 16px 10px;border-bottom:1px solid var(--line)}
+.film .top .ft{font-weight:800;font-size:16px;display:flex;align-items:center;gap:9px}
+.film .top .b{background:var(--ia);color:#06243d;padding:3px 9px;border-radius:8px;font-size:11.5px;font-weight:800}
+.film .top .b.up{background:var(--gp);color:#3a2406}
+.film .top .fd{color:var(--sub);font-size:12.5px;margin-top:5px}
+.film svg{width:100%;height:auto;display:block;background:var(--panel2)}
+.film .keys{padding:12px 16px 16px;display:flex;flex-direction:column;gap:9px}
+.key{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:#dfe6f3}
+.key .kn{flex:none;width:22px;height:22px;border-radius:50%;background:var(--line);color:var(--gold);
+  display:grid;place-items:center;font-size:11.5px;font-weight:800;margin-top:1px}
+.key b{color:#fff}
+.key .kw{color:#ffd166;font-size:12px}
+.key .kd{color:var(--sub);font-size:12px}
+
+/* interactive map */
+.mapgrid{display:grid;grid-template-columns:1.05fr .95fr;gap:18px}
+@media(max-width:820px){.mapgrid{grid-template-columns:1fr}}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.chip{cursor:pointer;border:1px solid var(--line);background:var(--panel2);color:var(--ink);
+  padding:7px 12px;border-radius:22px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:7px;
+  transition:.18s;user-select:none}
+.chip:hover{transform:translateY(-2px);border-color:var(--mut)}
+.chip.on{color:#12160a;box-shadow:0 6px 16px rgba(0,0,0,.3)}
+.chip small{opacity:.7;font-weight:500;font-size:11px}
+.modebar{display:flex;gap:8px;align-items:center;margin-bottom:10px;color:var(--mut);font-size:12.5px}
+.toggle{margin-left:auto;display:flex;background:var(--panel2);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.toggle button{background:transparent;border:0;color:var(--sub);padding:6px 14px;font-size:12.5px;cursor:pointer;font-weight:600}
+.toggle button.on{background:var(--gold);color:#20240f}
+svg{width:100%;height:auto;display:block}
+.tooth{cursor:pointer;transition:.15s}
+.tooth circle{stroke:#0b1020;stroke-width:1.5;fill:#232f4a}
+.tooth text{font-size:8.5px;fill:#8ea3c8;text-anchor:middle;font-weight:700;pointer-events:none}
+.tooth.dim{opacity:.28}
+.tooth.hl circle{stroke-width:2.5}
+.tooth.pick circle{stroke:var(--gold);stroke-width:3;stroke-dasharray:2 2}
+.midline{stroke:#3a4a6b;stroke-dasharray:4 4;stroke-width:1}
+.occl{stroke:#2a3552;stroke-width:1;stroke-dasharray:2 5}
+.archlbl{fill:#5f7099;font-size:11px;font-weight:700;letter-spacing:2px}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--sub);margin-top:10px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:middle}
+
+.detail{min-height:230px}
+.detail .empty{color:var(--mut);font-size:13.5px;display:grid;place-items:center;height:210px;text-align:center}
+.dhead{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.dhead .nv{font-size:19px;font-weight:800}
+.dreg{color:var(--sub);font-size:12.5px;margin-bottom:12px}
+.kv{display:grid;grid-template-columns:74px 1fr;gap:6px 10px;font-size:13px}
+.kv b{color:var(--gold);font-weight:700;font-size:12px}
+.kv span{color:#dfe6f3}
+.alert{margin-top:12px;background:rgba(255,107,107,.1);border:1px solid rgba(255,107,107,.28);
+  border-radius:10px;padding:9px 12px;font-size:12.5px;color:#ffc4c4}
+.alert b{color:#ff8f8f}
+.need{margin-top:10px;display:flex;gap:6px;flex-wrap:wrap}
+
+/* stepper */
+.stepper{display:grid;grid-template-columns:.9fr 1.1fr;gap:18px;align-items:center;margin-top:16px}
+@media(max-width:820px){.stepper{grid-template-columns:1fr}}
+.svwrap{background:var(--panel2);border-radius:14px;border:1px solid var(--line);padding:8px}
+.steps{display:flex;flex-direction:column;gap:10px}
+.step{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--panel);cursor:pointer;transition:.18s}
+.step:hover{border-color:var(--mut)}
+.step.on{border-color:var(--gold);background:linear-gradient(90deg,rgba(255,209,102,.1),transparent)}
+.step .t{font-weight:800;font-size:14.5px;display:flex;align-items:center;gap:8px}
+.step .t .num{background:var(--line);color:var(--gold);width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px}
+.step.on .t .num{background:var(--gold);color:#20240f}
+.step .d{color:var(--sub);font-size:12.5px;margin-top:4px}
+.step .ev{color:#ffd166;font-size:12px;margin-top:3px}
+#needle{transition:all .6s cubic-bezier(.4,0,.2,1)}
+
+/* qr */
+.qrbox{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+#qr{width:140px;height:140px;background:#fff;border-radius:12px;padding:10px;flex:none}
+footer{text-align:center;color:var(--mut);font-size:12px;margin-top:42px;line-height:1.9}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">口 腔 解 剖 生 理 学</div>
+  <h1>失之毫厘，差以千里</h1>
+  <div class="sub">从三叉神经分支解剖，看拔牙麻醉"这一针"该往哪儿扎。</div>
+  <div class="tagrow">
+    <span class="tag">🦷 上颌神经 V₂</span><span class="tag">🦷 下颌神经 V₃</span>
+    <span class="tag">📍 8 条神经 · 8 个进针点</span><span class="tag">🎬 3D 进针动画</span><span class="tag">👆 可点交互</span>
+  </div>
+</header>
+
+<div class="wrap">
+
+<!-- ============ 成果①：对照表 ============ -->
+<section>
+  <div class="h2"><span class="n">1</span>神经 → 进针 对照表 <small>颜色 = 所属神经</small></div>
+  <div class="card" style="padding:12px">
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr>
+      <th style="width:88px">神经</th><th style="width:150px">支配范围</th>
+      <th style="width:200px">进针落点 · 角度 · 深度 · 剂量</th><th>麻醉方法</th><th style="width:180px">⚠️ 失之毫厘 → 差以千里</th>
+    </tr></thead>
+    <tbody>
+      <tr class="grp"><td colspan="5">上 颌 神 经 （V₂）</td></tr>
+      <tr>
+        <td><span class="dot" style="background:var(--np)"></span><span class="nv">鼻腭神经</span></td>
+        <td>两侧尖牙连线<b>之前</b>的腭侧牙龈、黏骨膜、牙槽骨</td>
+        <td>进针点：<b>切牙乳头侧缘</b>；45°刺入后转与中切牙长轴平行，入切牙管 ≈<b>5 mm</b>；<b>0.2–0.5 ml</b></td>
+        <td>切牙孔注射法</td>
+        <td class="miss">乳头极敏感需高压慢推；尖牙腭侧与腭大神经交叉 → 常补浸润</td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--gp)"></span><span class="nv">腭大神经</span><br><small style="color:var(--mut)">=腭前神经</small></td>
+        <td>同侧前磨牙、磨牙腭侧黏骨膜、牙龈及牙槽骨</td>
+        <td>腭大孔＝<b>第3磨牙</b>（未萌则第2磨牙）腭侧龈缘→腭中线<b>中外1/3</b>；取孔<b>前方0.5 cm</b>（第2磨牙腭侧），自对侧向后上外进针抵骨 <b>0.3–0.5 ml</b></td>
+        <td>腭大孔注射法</td>
+        <td class="miss">偏后/过量 → 麻到腭中、腭后神经 → <b>软腭麻痹、恶心呕吐</b></td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--io)"></span><span class="nv">上牙槽前神经</span></td>
+        <td>上颌前牙牙髓、牙周膜、牙槽骨 + 唇侧牙龈</td>
+        <td rowspan="2" style="vertical-align:middle">眶下孔＝<b>眶下缘中点下方0.5–1 cm</b>；口外自鼻翼旁1 cm进针，与皮肤45°向<b>上后外</b>约<b>1.5 cm</b>入眶下管，<b>1–1.5 ml</b>；管内扩散，一针麻前+中神经</td>
+        <td rowspan="2" style="vertical-align:middle">眶下神经阻滞<br><small style="color:var(--mut)">（经眶下孔入眶下管）</small></td>
+        <td class="miss" rowspan="2">入管<b>过深 → 药入眶内伤眼球</b>；抵骨进不去孔先注少许再探孔，"落空感"即入孔</td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--io)"></span><span class="nv">上牙槽中神经</span></td>
+        <td>前磨牙 + <b>上颌第一磨牙近中颊根</b></td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--psa)"></span><span class="nv">上牙槽后神经</span></td>
+        <td>上颌磨牙牙髓、牙周膜、牙槽骨及颊侧牙龈<br><span class="miss">（第一磨牙近中颊根除外）</span></td>
+        <td>进针点：<b>上颌第2磨牙远中颊根前庭沟</b>；与牙长轴<b>40°</b>向<b>上后内</b>沿结节弧面滑 <b>1.5–2 cm</b>；<b>1.5–2 ml</b></td>
+        <td>上牙槽后神经阻滞<br><small style="color:var(--mut)">（上颌结节注射）</small></td>
+        <td class="miss">过深过上 → 刺破<b>翼静脉丛→血肿</b>；拔第一磨牙须在<b>近中颊根</b>补浸润（归上牙槽中神经）</td>
+      </tr>
+      <tr class="grp"><td colspan="5">下 颌 神 经 （V₃）</td></tr>
+      <tr>
+        <td><span class="dot" style="background:var(--ia)"></span><span class="nv">下牙槽神经</span></td>
+        <td>同侧<b>全部下颌牙</b>牙髓、牙周膜、牙槽骨 + 前磨牙至中切牙唇侧牙龈、下唇</td>
+        <td>注射器置<b>对侧口角</b>，与中线<b>45°</b>、高于𬌗面<b>1 cm</b>平行进针；进针点＝<b>颊脂垫尖</b>／翼下颌皱襞中点外<b>3–4 mm</b>；进针<b>2–2.5 cm</b>触骨面（下颌小舌上方），<b>1–1.5 ml</b></td>
+        <td>下牙槽神经阻滞<br><small style="color:var(--mut)">（翼下颌注射法）</small></td>
+        <td class="miss">太浅/太偏后=白扎；征象＝<b>同侧下唇5 min内发麻</b>，>10 min不麻须重打</td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--lg)"></span><span class="nv">舌神经</span></td>
+        <td>同侧下颌<b>舌侧</b>牙龈、口底黏膜、<span class="pill" style="background:#7B8CFF22;color:#a9b2ff;border:1px solid #7B8CFF55">舌前 2/3 黏膜</span></td>
+        <td>下牙槽阻滞后<b>退针约1 cm</b>（略偏前内/舌侧），<b>0.5–1 ml</b>；边退边注。舌神经恒位于下牙槽神经<b>前内方约1 cm</b></td>
+        <td>退针1 cm注射法</td>
+        <td class="miss">课本常误写"舌前<b>1/3</b>"——应为<b>2/3</b>；舌神经<b>比下牙槽先麻</b>，可作定位反馈</td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--bu)"></span><span class="nv">颊神经</span><br><small style="color:var(--mut)">=颊长神经</small></td>
+        <td>下颌<b>磨牙 + 第二前磨牙</b>颊侧牙龈、颊黏膜、颊肌及皮肤</td>
+        <td>继续<b>退针至黏膜下</b>向颊侧注<b>0.5–1 ml</b>；或磨牙𬌗面线×下颌支前缘交点颊黏膜（腮腺导管口下后1 cm）进针0.5 cm</td>
+        <td>归入"下颌一针三麻"第3步</td>
+        <td class="miss">退针不够浅会漏麻颊侧 → 拔下颌磨牙<b>颊侧钳夹仍痛</b></td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--me)"></span><span class="nv">颏神经</span><br><small style="color:var(--mut)">选学</small></td>
+        <td>下颌第二前磨牙→中切牙<b>唇侧</b>牙龈、下唇及颏部皮肤</td>
+        <td>进针点＝下颌第1、2前磨牙根尖之间黏膜，向前下内沿骨面探寻<b>颏孔</b>，<b>0.4–0.6 cm</b>，<b>0.5–0.6 ml</b>，注毕口外按压助药入孔</td>
+        <td>颏孔（颏神经）阻滞</td>
+        <td class="miss">拔下颌前牙若只做下牙槽阻滞，唇侧牙龈常需它或局部浸润补充</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  </div>
+</section>
+
+<!-- ============ 成果③：交互 ============ -->
+<section>
+  <div class="h2"><span class="n">2</span>交互探索 <small>（3D Body 建模截图于此区呈现）</small></div>
+  <div class="card">
+    <div class="chips" id="chips"></div>
+    <div class="mapgrid">
+      <div>
+        <div class="modebar">
+          <span>模式：</span>
+          <div class="toggle">
+            <button id="mNerve" class="on">点神经 → 看麻区</button>
+            <button id="mTooth">点牙 → 看几针</button>
+          </div>
+        </div>
+        <svg id="arch" viewBox="0 0 420 340" aria-label="牙弓示意图"></svg>
+        <div class="legend">
+          <span><i style="background:var(--np)"></i>鼻腭(腭侧)</span>
+          <span><i style="background:var(--gp)"></i>腭大(腭侧)</span>
+          <span><i style="background:var(--io)"></i>眶下·上牙槽前/中</span>
+          <span><i style="background:var(--psa)"></i>上牙槽后</span>
+          <span><i style="background:var(--ia)"></i>下牙槽(牙髓)</span>
+          <span><i style="background:var(--lg)"></i>舌(舌侧)</span>
+          <span><i style="background:var(--bu)"></i>颊(颊侧)</span>
+        </div>
+      </div>
+      <div class="detail card" style="background:var(--panel2)" id="detail">
+        <div class="empty">👈 点上方彩色神经标签<br>或切到"点牙模式"点一颗牙</div>
+      </div>
+    </div>
+
+    <div class="stepper">
+      <div class="svwrap">
+        <svg viewBox="0 0 300 300" aria-label="下颌支进针示意">
+          <path d="M70,40 L150,40 C185,40 200,70 205,120 L215,230 C217,255 200,270 175,272 L120,275
+                   C110,240 108,200 112,160 L96,160 C80,160 72,140 72,110 Z" fill="#1a2338" stroke="#33425f" stroke-width="2"/>
+          <text x="150" y="210" fill="#4a5a7d" font-size="10.5" text-anchor="middle">下颌支（内侧面）</text>
+          <circle cx="150" cy="150" r="4.5" fill="var(--ia)"/>
+          <text x="158" y="146" fill="#5AA9E6" font-size="10" font-weight="700">下颌孔(下颌小舌上方)</text>
+          <path d="M150,150 Q140,120 128,95" stroke="var(--ia)" stroke-dasharray="3 3" fill="none" stroke-width="1.5"/>
+          <line x1="150" y1="150" x2="120" y2="120" stroke="var(--lg)" stroke-width="2.5"/>
+          <text x="92" y="116" fill="#7B8CFF" font-size="10" font-weight="700">舌神经(前内~1cm)</text>
+          <text x="206" y="120" fill="#B088E0" font-size="10" font-weight="700">→颊侧</text>
+          <g id="needle">
+            <line id="needleLine" x1="35" y1="205" x2="150" y2="150" stroke="#ffd166" stroke-width="3.5" stroke-linecap="round"/>
+            <circle id="needleTip" cx="150" cy="150" r="4.5" fill="#5AA9E6"/>
+            <rect x="20" y="199" width="22" height="12" rx="3" fill="#ffd166"/>
+          </g>
+          <text x="28" y="230" fill="#8ea3c8" font-size="9.5">注射器@对侧口角</text>
+        </svg>
+      </div>
+      <div class="steps" id="steps">
+        <div class="step on" data-i="0">
+          <div class="t"><span class="num">1</span>下牙槽神经 · 触骨面注 2/3 量</div>
+          <div class="d">对侧前磨牙间进针，与中线45°、高于𬌗面1 cm平行推进 ≈2–2.5 cm，针尖抵下颌小舌上方下颌神经沟骨面。</div>
+          <div class="ev">✓ 5 min 内同侧下唇发麻</div>
+        </div>
+        <div class="step" data-i="1">
+          <div class="t"><span class="num">2</span>舌神经 · 退针 1 cm，偏舌侧注 1/2 余量</div>
+          <div class="d">从骨面后退约1 cm至黏膜下，针尖略转向前内（舌侧），注 0.5–1 ml。此处舌神经恒定又表浅。</div>
+          <div class="ev">✓ 舌尖烧灼肿胀感，比下牙槽先麻</div>
+        </div>
+        <div class="step" data-i="2">
+          <div class="t"><span class="num">3</span>颊神经 · 再退至黏膜下，转向颊侧注完</div>
+          <div class="d">针尖继续退到黏膜浅层（离黏膜面0.3–0.5 cm），转向颊侧注剩余 0.5 ml。</div>
+          <div class="ev">✓ 下颌磨牙颊侧牙龈麻木 → 一针三麻完成</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="qrbox" style="margin-top:20px;align-items:center">
+      <div id="qr"></div>
+      <div style="font-size:13px;color:var(--sub);max-width:420px">
+        扫码在手机复现本页：<b style="color:#ffd166">对照表 + 可点牙弓 + 一针三麻动画</b>。<br>
+        <span style="color:var(--mut);font-size:12px">本地直接打开时二维码留空；把本文件托管上线（GitHub/Gitee Pages 等）后刷新即自动生成。</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  失之毫厘，差以千里 · 从三叉神经分支解剖看拔牙麻醉如何进针<br>
+  数据口径：《口腔颌面外科学》《口腔局部麻醉操作规范》《临床技术操作规范·口腔医学分册》· 进针参数以教材与带教老师为准
+</footer>
+</div>
+
+<script>
+const U=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16];
+const L=[32,31,30,29,28,27,26,25,24,23,22,21,20,19,18,17];
+function needs(n){
+  let palN=(n>=6&&n<=11)?['np']:['gp']; if(n===6||n===11)palN=['np','gp'];
+  let bucN=[];
+  if([6,7,8,9,10,11,4,5,12,13].includes(n))bucN.push('io');
+  if([1,2,3,14,15,16].includes(n))bucN.push('psa');
+  if(n===14)bucN.push('io');
+  return {pal:palN,buc:bucN};
+}
+function needsL(n){
+  let buc=([17,18,19,20,29,30,31,32].includes(n))?['bu']:['me'];
+  return {pulp:['ia'],ling:['lg'],buc};
+}
+const NERVES={
+  np:{name:'鼻腭神经',color:'#E76F51',reg:'两侧尖牙连线之前 · 上颌前牙腭侧',pt:'切牙乳头(腭乳头)侧缘',ang:'45°刺入→转平行牙长轴',dep:'入切牙管 ≈5 mm',dose:'0.2–0.5 ml',m:'切牙孔注射法',warn:'乳头极敏感需高压慢推；尖牙腭侧与腭大神经交叉，常补浸润'},
+  gp:{name:'腭大神经(腭前)',color:'#F4A261',reg:'同侧前磨牙、磨牙腭侧黏骨膜/牙龈/牙槽骨',pt:'第3磨牙腭侧龈缘→腭中线中外1/3；取孔前方0.5cm(第2磨牙腭侧)',ang:'从对侧前磨牙方向 向后上外',dep:'抵骨面',dose:'0.3–0.5 ml',m:'腭大孔注射法',warn:'偏后/过量→麻到腭中腭后神经→软腭麻痹、恶心呕吐'},
+  io:{name:'眶下神经（上牙槽前+中）',color:'#E9C46A',reg:'上颌前牙+前磨牙牙髓/牙周/唇侧牙龈 + 第一磨牙近中颊根',pt:'眶下缘中点下方0.5–1cm；口外自鼻翼旁1cm进针',ang:'与皮肤45° 向上后外',dep:'入眶下管 ≈1.5 cm',dose:'1–1.5 ml',m:'眶下神经阻滞（经眶下孔入眶下管）',warn:'入管过深→药入眶内伤眼球；抵骨进不去先注少许再探孔，落空感即入孔'},
+  psa:{name:'上牙槽后神经',color:'#2A9D8F',reg:'上颌磨牙牙髓/牙周/牙槽骨+颊侧牙龈（第一磨牙近中颊根除外）',pt:'上颌第2磨牙远中颊根前庭沟',ang:'与牙长轴40° 向上后内，贴结节弧面',dep:'≈1.5–2 cm',dose:'1.5–2 ml',m:'上牙槽后神经阻滞（上颌结节注射）',warn:'过深过上→刺破翼静脉丛血肿；拔第一磨牙须在近中颊根补浸润'},
+  ia:{name:'下牙槽神经',color:'#5AA9E6',reg:'同侧全部下颌牙牙髓/牙周/牙槽骨+前磨牙~中切牙唇侧牙龈+下唇',pt:'颊脂垫尖／翼下颌皱襞中点外3–4mm；注射器置对侧口角',ang:'与中线45°，高于𬌗面1cm平行进针',dep:'≈2–2.5 cm 触骨面(下颌小舌上方)',dose:'1–1.5 ml',m:'下牙槽神经阻滞（翼下颌注射法）',warn:'太浅/太偏后=白扎；征象=5min内同侧下唇发麻，>10min不麻须重打'},
+  lg:{name:'舌神经',color:'#7B8CFF',reg:'同侧下颌舌侧牙龈、口底黏膜、舌前2/3黏膜(一般感觉)',pt:'下牙槽阻滞后 退针约1cm，略偏前内(舌侧)',ang:'稍转向舌侧',dep:'退1 cm至黏膜下',dose:'0.5–1 ml',m:'退针1cm注射法（一针三麻第2步）',warn:'范围=舌前2/3 NOT 1/3；位于下牙槽神经前内~1cm，且比下牙槽先麻'},
+  bu:{name:'颊神经(颊长)',color:'#B088E0',reg:'下颌磨牙+第二前磨牙颊侧牙龈、颊黏膜、颊肌及皮肤',pt:'再退针至黏膜下转向颊侧；或磨牙𬌗面线×下颌支前缘交点颊黏膜(腮腺导管口下后1cm)',ang:'向颊侧',dep:'黏膜下 0.3–0.5cm',dose:'0.5–1 ml',m:'一针三麻第3步 / 远中颊根浸润',warn:'退针不够浅会漏麻颊侧→拔下颌磨牙颊侧钳夹仍痛'},
+  me:{name:'颏神经（选学）',color:'#59C2C0',reg:'下颌第二前磨牙~中切牙唇侧牙龈、下唇及颏部',pt:'下颌第1、2前磨牙根尖之间黏膜，探寻颏孔',ang:'向前下内沿骨面',dep:'0.4–0.6 cm',dose:'0.5–0.6 ml',m:'颏孔(颏神经)阻滞麻醉',warn:'注毕口外按压助药入孔；下前牙拔除唇侧牙龈常需它或补浸润'},
+};
+const svg=document.getElementById('arch');
+const cx=210,cyU=118,cyL=222,Rx=150,Ry=88;
+function pos(i,arch){const t=i/15,ang=Math.PI*(1+t);
+  const x=cx+Rx*Math.cos(ang);return arch==='U'?{x,y:cyU+Ry*Math.sin(ang)}:{x,y:cyL-Ry*Math.sin(ang)};}
+function drawArch(){let s='';
+  s+=`<line class="midline" x1="${cx}" y1="20" x2="${cx}" y2="320"/>`;
+  s+=`<line class="occl" x1="40" y1="170" x2="380" y2="170"/>`;
+  s+=`<text class="archlbl" x="24" y="86">上颌</text><text class="archlbl" x="24" y="252">下颌</text>`;
+  s+=`<text x="${cx-14}" y="34" fill="#6b7ca0" font-size="9">右</text><text x="${cx+6}" y="34" fill="#6b7ca0" font-size="9">左</text>`;
+  U.forEach((num,i)=>{const p=pos(i,'U');s+=toothSVG(num,p,'U');});
+  L.forEach((num,i)=>{const p=pos(i,'L');s+=toothSVG(num,p,'L');});
+  svg.innerHTML=s;}
+function toothSVG(num,p,arch){return `<g class="tooth" data-num="${num}" data-arch="${arch}" transform="translate(${p.x.toFixed(1)},${p.y.toFixed(1)})"><circle r="12"></circle><text y="3">${num}</text></g>`;}
+drawArch();
+
+let mode='nerve',sel=null;
+const chipsEl=document.getElementById('chips');
+Object.keys(NERVES).forEach(k=>{const n=NERVES[k];const b=document.createElement('div');b.className='chip';b.dataset.k=k;
+  b.innerHTML=`<span class="dot" style="background:${n.color}"></span>${n.name}<small>${n.m.split('（')[0]}</small>`;
+  b.onclick=()=>selectNerve(k);chipsEl.appendChild(b);});
+const detail=document.getElementById('detail');
+function teethOf(k){const set=new Set();
+  if(k==='np')[6,7,8,9,10,11].forEach(x=>set.add('U'+x));
+  if(k==='gp')[1,2,3,4,5,12,13,14,15,16,6,11].forEach(x=>set.add('U'+x));
+  if(k==='io')[6,7,8,9,10,11,4,5,12,13,14].forEach(x=>set.add('U'+x));
+  if(k==='psa')[1,2,3,14,15,16].forEach(x=>set.add('U'+x));
+  if(k==='ia')L.forEach(x=>set.add('L'+x));
+  if(k==='lg')L.forEach(x=>set.add('L'+x));
+  if(k==='bu')[32,31,30,29,20,19,18,17].forEach(x=>set.add('L'+x));
+  if(k==='me')[28,27,26,25,24,23,22,21].forEach(x=>set.add('L'+x));
+  return set;}
+function applyColors(k){const n=NERVES[k];const set=teethOf(k);
+  document.querySelectorAll('.tooth').forEach(t=>{const key=t.dataset.arch+t.dataset.num;const c=t.querySelector('circle');
+    if(set.has(key)){c.style.fill=n.color;c.setAttribute('stroke',n.color);t.classList.add('hl');}
+    else{c.style.fill='';c.setAttribute('stroke','#0b1020');t.classList.remove('hl');}
+    t.classList.toggle('dim',!set.has(key));t.classList.remove('pick');});}
+function clearColors(){document.querySelectorAll('.tooth').forEach(t=>{const c=t.querySelector('circle');c.style.fill='';c.setAttribute('stroke','#0b1020');t.classList.remove('hl','dim','pick');});}
+function selectNerve(k){if(mode!=='nerve')setMode('nerve');sel=k;
+  document.querySelectorAll('.chip').forEach(c=>{c.classList.toggle('on',c.dataset.k===k);
+    const n=NERVES[c.dataset.k];c.style.background=c.dataset.k===k?n.color:'';c.style.color=c.dataset.k===k?'#12160a':'';});
+  applyColors(k);const n=NERVES[k];const cnt=teethOf(k).size;
+  detail.innerHTML=`<div class="dhead"><span class="dot" style="background:${n.color};width:13px;height:13px"></span><span class="nv">${n.name}</span><span class="pill" style="background:${n.color}22;color:${n.color};border:1px solid ${n.color}55;margin-left:auto">覆盖 ${cnt} 颗牙</span></div>
+    <div class="dreg">🗺 麻区：${n.reg}</div>
+    <div class="kv"><b>进针点</b><span>${n.pt}</span><b>方向</b><span>${n.ang}</span><b>深度</b><span>${n.dep}</span><b>剂量</b><span>${n.dose}</span><b>方法</b><span>${n.m}</span></div>
+    <div class="alert">⚠️ <b>差千里：</b>${n.warn}</div>`;}
+function pickTooth(num,arch){
+  sel=null;document.querySelectorAll('.chip').forEach(c=>{c.classList.remove('on');c.style.background='';c.style.color='';});
+  const order=[];
+  if(arch==='U'){const nd=needs(num);nd.pal.forEach(k=>order.push(NERVES[k].name+'（腭侧）'));nd.buc.forEach(k=>order.push(NERVES[k].name+'（颊侧/牙髓）'));var title=`上颌牙 #${num}`;}
+  else{const nd=needsL(num);nd.pulp.forEach(k=>order.push(NERVES[k].name+'（牙髓/牙槽骨）'));nd.ling.forEach(k=>order.push(NERVES[k].name+'（舌侧牙龈）'));nd.buc.forEach(k=>order.push(NERVES[k].name+'（颊/唇侧牙龈）'));var title=`下颌牙 #${num}`;}
+  clearColors();document.querySelectorAll('.tooth').forEach(t=>{const key=t.dataset.arch+t.dataset.num;const c=t.querySelector('circle');
+    if(key===arch+num){c.style.fill='#ffd166';c.setAttribute('stroke','#fff');t.classList.add('pick');}else t.classList.add('dim');});
+  const uniq=[...new Set(order)];
+  const inj=arch==='U'?(uniq.length>=3?'<b>≈2–3 针：</b>腭侧1针(鼻腭/腭大)+眶下管内1针(前+中)+结节后1针(上牙槽后)；第一磨牙近中颊根再补浸润。':'<b>≈2 针：</b>腭侧1针 + 眶下管1针（前牙/前磨牙一管搞定前+中神经）。')
+    :'<b>下颌经典 1 针三麻：</b>下牙槽触骨→退1cm舌神经→退至黏膜下颊神经；下前牙唇侧视情加颏神经/浸润。';
+  detail.innerHTML=`<div class="dhead"><span style="font-size:20px">🦷</span><span class="nv">${title}</span><span class="pill" style="background:#ffd16622;color:#ffd166;border:1px solid #ffd16655;margin-left:auto">拔它要 ${uniq.length} 条神经</span></div>
+    <div class="need">${uniq.map(o=>`<span class="pill" style="background:#ffffff10;color:#eef2f7;border:1px solid #2a3552">${o}</span>`).join('')}</div>
+    <div class="alert" style="border-color:#ffd16655;background:rgba(255,209,102,.08);color:#ffe6a8;margin-top:12px">💉 ${inj}</div>`;
+}
+document.querySelectorAll('.tooth').forEach(t=>{t.onclick=()=>pickTooth(+t.dataset.num,t.dataset.arch);});
+function setMode(m){mode=m;document.getElementById('mNerve').classList.toggle('on',m==='nerve');document.getElementById('mTooth').classList.toggle('on',m==='tooth');clearColors();
+  if(m==='nerve'&&sel)selectNerve(sel);
+  else if(m==='tooth'){document.querySelectorAll('.chip').forEach(c=>{c.classList.remove('on');c.style.background='';c.style.color='';});detail.innerHTML='<div class="empty">👆 点牙弓上任意一颗牙<br>看拔它需要哪几条神经、几针搞定</div>';}}
+document.getElementById('mNerve').onclick=()=>setMode('nerve');
+document.getElementById('mTooth').onclick=()=>setMode('tooth');
+
+const needlePos=[{tx:150,ty:150},{tx:132,ty:168},{tx:120,ty:190}];
+const tipColor=['#5AA9E6','#7B8CFF','#B088E0'];
+document.querySelectorAll('#steps .step').forEach(st=>{st.onclick=()=>{
+  document.querySelectorAll('#steps .step').forEach(x=>x.classList.remove('on'));st.classList.add('on');
+  const i=+st.dataset.i,p=needlePos[i];
+  document.getElementById('needleLine').setAttribute('x2',p.tx);document.getElementById('needleLine').setAttribute('y2',p.ty);
+  const tip=document.getElementById('needleTip');tip.setAttribute('cx',p.tx);tip.setAttribute('cy',p.ty);tip.setAttribute('fill',tipColor[i]);};});
+
+(function(){try{const url=location.href;
+  if(/^https?:/.test(url)&&!url.includes('file://')){const s=document.createElement('script');
+    s.src='https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js';
+    s.onload=()=>{new QRCode(document.getElementById('qr'),{text:url,width:140,height:140,colorDark:'#0f1420',colorLight:'#fff',correctLevel:QRCode.CorrectLevel.M});};
+    document.head.appendChild(s);}
+  else{document.getElementById('qr').innerHTML='<div style="width:122px;height:122px;display:grid;place-items:center;font-size:12px;color:#8a96b3;text-align:center;line-height:1.5">托管上线后<br>自动生成<br>二维码</div>';}
+}catch(e){}})();
+</script>
+</body>
+</html>
